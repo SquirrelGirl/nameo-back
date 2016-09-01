@@ -49,3 +49,7 @@
 
 DONNEES/
 data/*
+.buildpath
+.project
+
+.settings/
