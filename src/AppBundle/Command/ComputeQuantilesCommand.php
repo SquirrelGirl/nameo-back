@@ -16,27 +16,13 @@ class BootstrapCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('nameo:bootstrap')
-            ->setDescription('bootstraps the db')
+            ->setName('nameo:quantiles')
+            ->setDescription('computes quantiles')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-      $entityManager = $this->getContainer()->get('doctrine')->getManager();
-
-      $cats = [
-      		1 => "Personnes célèbres",
-      		2 => "Oeuvres célèbres",
-      		3 => "Objets et animaux"
-      ];
-      
-      foreach($cats as $index => $name) {
-      	$category = new Category();
-      	$category->setName($name);
-      	$entityManager->persist($category);
-      }
-      
-      $entityManager->flush();
+      $this->getContainer()->get('doctrine')->getConnection()->executeQuery("UPDATE CARD SET QUANTILE=FLOOR(RAND()*12)");
     }
 }

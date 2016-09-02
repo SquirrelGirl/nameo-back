@@ -16,7 +16,7 @@ class ImportDataCommand extends ContainerAwareCommand
     {
         $this
             ->setName('nameo:import')
-            ->setDescription('importe les données des cartes')
+            ->setDescription('imports card data')
         ;
     }
 
