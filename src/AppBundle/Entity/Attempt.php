@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Attempt
+ * Represents 1 actual attempt at guessing a card, during 1 actual game session
  *
  * @ORM\Table(name="attempt")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AttemptRepository")
@@ -22,6 +23,7 @@ class Attempt
     private $id;
 
     /**
+     * Have the players guessed the card correctly?
      * @var bool
      *
      * @ORM\Column(name="guessed", type="boolean", nullable=true)
@@ -29,12 +31,31 @@ class Attempt
     private $guessed;
 
     /**
+     * During which step of the game was the card attempted? (1,2,3)
      * @var int
      *
      * @ORM\Column(name="step", type="integer")
      */
     private $step;
 
+    /**
+     * Card which was attempted
+     * @var Card
+     * 
+     * @ORM\ManyToOne(targetEntity="Card")
+     * @ORM\JoinColumn(name="card_id", referencedColumnName="id")
+     */
+    private $card;
+    
+    /**
+     * Game session during which the card was attempted
+     * @var Game
+     * 
+     * @ORM\ManyToOne(targetEntity="Game")
+     * @ORM\JoinColumn(name="game_id", referencedColumnName="id")
+     */
+    private $game;
+       
 
     /**
      * Get id
@@ -93,21 +114,6 @@ class Attempt
     {
         return $this->step;
     }
-
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Card")
-     * @ORM\JoinColumn(name="card_id", referencedColumnName="id")
-     */
-    private $card;
-
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Game")
-     * @ORM\JoinColumn(name="game_id", referencedColumnName="id")
-     */
-    private $game;
-
 
     /**
      * Set card

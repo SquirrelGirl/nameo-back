@@ -5,7 +5,8 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * game
+ * Game
+ * A game session
  *
  * @ORM\Table(name="game")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GameRepository")
@@ -22,6 +23,7 @@ class Game
     private $id;
 
     /**
+     * The language that was set on the navigator
      * @var string
      *
      * @ORM\Column(name="locale", type="string", length=10, nullable=true)
@@ -29,6 +31,7 @@ class Game
     private $locale;
 
     /**
+     * The difficulty quantile requested for the session
      * @var int
      *
      * @ORM\Column(name="difficulty", type="integer")
@@ -36,6 +39,7 @@ class Game
     private $difficulty;
 
     /**
+     * The number of players
      * @var int
      *
      * @ORM\Column(name="players", type="integer")
@@ -43,6 +47,7 @@ class Game
     private $players;
 
     /**
+     * The number of teams
      * @var int
      *
      * @ORM\Column(name="teams", type="integer")
@@ -50,6 +55,7 @@ class Game
     private $teams;
 
     /**
+     * The timestamp of the start of the game
      * @var \DateTime
      *
      * @ORM\Column(name="start", type="datetimetz")
@@ -57,6 +63,7 @@ class Game
     private $start;
 
     /**
+     * If set, the phase at which the game was aborted
      * @var int
      *
      * @ORM\Column(name="aborted", type="integer", nullable=true)

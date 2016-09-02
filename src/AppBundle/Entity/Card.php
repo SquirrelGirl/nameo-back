@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Card
+ * Represents 1 card in the game
  *
  * @ORM\Table(name="card")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CardRepository")
@@ -22,6 +23,7 @@ class Card
     private $id;
 
     /**
+     * Title of the card, what must be guessed
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, unique=true)
@@ -29,6 +31,7 @@ class Card
     private $title;
 
     /**
+     * Description of the card, to give more information
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=true)
@@ -36,6 +39,7 @@ class Card
     private $description;
 
     /**
+     * How many times this card has been attempted
      * @var int
      *
      * @ORM\Column(name="attempts", type="integer")
@@ -43,6 +47,7 @@ class Card
     private $attempts;
 
     /**
+     * How many times this card has been correctly guessed
      * @var int
      *
      * @ORM\Column(name="successes", type="integer")
@@ -50,13 +55,22 @@ class Card
     private $successes;
 
     /**
+     * Which difficulty quantile does this card belong to
      * @var int
      *
      * @ORM\Column(name="quantile", type="integer", nullable=true)
      */
     private $quantile;
 
-
+    /**
+     * Category of the card
+     * @var Category
+     * 
+     * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    private $category;
+    
     /**
      * Get id
      *
@@ -186,12 +200,6 @@ class Card
     {
         return $this->quantile;
     }
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Category")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
-     */
-    private $category;
 
     /**
      * Set category
