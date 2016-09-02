@@ -2,6 +2,9 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Card;
+use AppBundle\Entity\Category;
+
 /**
  * CardRepository
  *
@@ -10,4 +13,17 @@ namespace AppBundle\Repository;
  */
 class CardRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function getCardsByQuantile(Category $category = null)
+	{
+		$result = array_fill(0, 12, []);
+		
+		$cards = $category ? $this->findBy(['category' => $category]) : $this->findAll();
+		
+		/* @var $card Card */
+		foreach($cards as $card) {
+			$result[$card->getQuantile()][] = $card;
+		}
+		
+		return $result;
+	}
 }
