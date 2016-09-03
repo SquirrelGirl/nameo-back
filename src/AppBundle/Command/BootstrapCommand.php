@@ -2,9 +2,7 @@
 namespace AppBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use AppBundle\Entity\Category;
 
@@ -26,12 +24,12 @@ class BootstrapCommand extends ContainerAwareCommand
       $entityManager = $this->getContainer()->get('doctrine')->getManager();
 
       $cats = [
-      		1 => "Personnes célèbres",
-      		2 => "Oeuvres célèbres",
-      		3 => "Objets et animaux"
+      		"Personnes célèbres",
+      		"Oeuvres célèbres",
+      		"Objets et animaux"
       ];
       
-      foreach($cats as $index => $name) {
+      foreach($cats as $name) {
       	$category = new Category();
       	$category->setName($name);
       	$entityManager->persist($category);
