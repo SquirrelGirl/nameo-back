@@ -3,13 +3,16 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DrawController extends Controller
 {
     /**
      * @Route("/draw/{category_id}/{quantity}/{quantile}", name="draw")
+     * @Method({"GET"})
      */
     public function drawAction($category_id, $quantity, $quantile, Request $request)
     {
@@ -22,7 +25,7 @@ class DrawController extends Controller
     	
     	srand();
 
-    	$cards = [];
+    	$data = [];
     	for($i = 0; $i < $quantity; $i++) {
     		// get a random quantile centered around $quantile
     		$randomQuantile = $this->getProbabilisticInteger(0, 11, $quantile);
@@ -31,11 +34,18 @@ class DrawController extends Controller
     		// remove the card from the collection to avoid duplicates
     		$removedCards = array_splice($cardsByQuantile[$randomQuantile], $randomIndex, 1);
     		// add the picked card to the result
-    		$cards[] = $removedCards[0];
+    		/* @var $card Card */
+    		$card = $removedCards[0];
+    		$data[] = [
+    				'id' => $card->getId(),
+    				'title' => $card->getTitle()
+    		];
     	}
     	
-    	dump($cards);
-    	die();
+    	return new JsonResponse([
+    			'success' => true,
+    			'data' => $data
+    	]);
     }
     
     /**
