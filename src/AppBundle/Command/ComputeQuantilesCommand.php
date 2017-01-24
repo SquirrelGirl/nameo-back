@@ -20,6 +20,6 @@ class ComputeQuantilesCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-      $this->getContainer()->get('doctrine')->getConnection()->executeQuery("UPDATE CARD SET QUANTILE=FLOOR(RAND()*12)");
+      $this->getContainer()->get('doctrine')->getConnection()->executeQuery("UPDATE card SET QUANTILE=FLOOR(RAND()*12)");
     }
 }

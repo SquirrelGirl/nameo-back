@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Card
@@ -19,6 +20,8 @@ class Card
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * 
+     * @Groups({"rest"})
      */
     private $id;
 
@@ -27,6 +30,8 @@ class Card
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, unique=true)
+     * 
+     * @Groups({"rest"})
      */
     private $title;
 
