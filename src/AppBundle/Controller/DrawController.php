@@ -11,11 +11,15 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class DrawController extends Controller
 {
     /**
-     * @Route("/draw/{category_id}/{quantity}/{quantile}", name="draw")
+     * @Route("/draw", name="draw")
      * @Method({"GET"})
      */
-    public function drawAction($category_id, $quantity, $quantile, Request $request)
+    public function drawAction(Request $request)
     {
+        $category_id = $request->query->get('category');
+        $quantity = $request->query->get('quantity');
+        $quantile = $request->query->get('quantile');
+        
     	$category = $this->getDoctrine()->getManager()->getRepository('AppBundle:Category')->find($category_id);
     	if(!$category) {
     		throw $this->createNotFoundException("unknown category");
@@ -42,10 +46,10 @@ class DrawController extends Controller
     		];
     	}
     	
-    	return new JsonResponse([
-    			'success' => true,
-    			'data' => $data
-    	]);
+        $response = new JsonResponse();
+        $response->setData($data);
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        return $response;
     }
     
     /**
